@@ -75,6 +75,7 @@
   </div>
 
 <script>
+<script>
 async function validarToken() {
   const token = document
     .getElementById('tokenInput')
@@ -88,12 +89,15 @@ async function validarToken() {
     if (tokens[token]) {
       sessionStorage.setItem('lumina_nome', tokens[token].nome);
       sessionStorage.setItem('lumina_token', token);
-      window.location.href = 'app.html';
+
+      window.location.href =
+        'https://lumina-1-5-downgrade-277430647911.us-west1.run.app';
     } else {
       document.getElementById('erro').classList.remove('hidden');
     }
-  } catch {
-    alert('Erro ao validar acesso.');
+  } catch (e) {
+    console.error(e);
+    alert('Erro ao validar acesso. Tokens não carregados.');
   }
 }
 </script>
