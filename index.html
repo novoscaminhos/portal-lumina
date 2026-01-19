@@ -82,7 +82,7 @@ async function validarToken() {
     .toUpperCase();
 
   try {
-    const res = await fetch('tokens.json');
+    const res = await fetch('./tokens.json');
     const tokens = await res.json();
 
     if (tokens[token]) {
