@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lumina</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body
+  class="bg-slate-950 text-slate-100"
+  oncontextmenu="return false"
+  onselectstart="return false"
+>
+
+  <div class="p-3 bg-slate-900 flex justify-between items-center text-sm">
+    <span>
+      👤 Aluno: <strong id="alunoNome"></strong>
+    </span>
+    <span class="opacity-60">
+      Token: <span id="tokenId"></span>
+    </span>
+    <button onclick="sair()" class="text-red-400 text-xs">Sair</button>
+  </div>
+
+  <div class="relative w-full h-[calc(100vh-44px)]">
+    <iframe
+      id="luminaFrame"
+      class="w-full h-full border-none z-10">
+    </iframe>
+
+    <div class="absolute inset-0 z-20 pointer-events-none"></div>
+  </div>
+
+<script>
+const nome = sessionStorage.getItem('lumina_nome');
+const token = sessionStorage.getItem('lumina_token');
+
+if (!nome || !token) {
+  window.location.replace('index.html');
+}
+
+document.getElementById('alunoNome').innerText = nome;
+document.getElementById('tokenId').innerText = token.slice(-4);
+
+document.getElementById('luminaFrame').src =
+  `https://lumina-1-5-downgrade-277430647911.us-west1.run.app?session=${encodeURIComponent(token)}`;
+
+function sair() {
+  sessionStorage.clear();
+  window.location.href = 'index.html';
+}
+
+// Bloqueios básicos de teclado
+document.addEventListener('keydown', (e) => {
+  if (e.ctrlKey && ['u', 's', 'p'].includes(e.key.toLowerCase())) {
+    e.preventDefault();
+  }
+});
+</script>
+
+</body>
+</html>
