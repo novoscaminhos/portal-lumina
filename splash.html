@@ -4,89 +4,188 @@
   <meta charset="UTF-8" />
   <title>Lumina — Ritual de Acesso</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="./assets/favicon.ico" />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      background: radial-gradient(circle at center, #1e1b4b, #020617);
+      margin: 0;
+      min-height: 100vh;
+      background: #000;
+      font-family: 'Cinzel', serif;
+      color: #e5e7eb;
       overflow: hidden;
     }
 
-    @keyframes glow {
-      0% { box-shadow: 0 0 0 rgba(255,255,255,0); }
-      50% { box-shadow: 0 0 40px rgba(255,255,255,0.25); }
-      100% { box-shadow: 0 0 0 rgba(255,255,255,0); }
+    /* ===== FUNDO COM IMAGEM ===== */
+    .background {
+      position: fixed;
+      inset: 0;
+      background-image: url('./assets/cigana.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      filter: saturate(1.05) contrast(1.05);
     }
 
-    .ritual-glow {
-      animation: glow 2.2s ease-in-out infinite;
-      border-radius: 9999px;
+    /* Degradê nas bordas */
+    .background::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at center,
+          rgba(0,0,0,0) 40%,
+          rgba(0,0,0,0.6) 75%,
+          rgba(0,0,0,0.95) 100%);
     }
 
-    .fade-in {
-      animation: fadeIn 1.2s ease forwards;
+    /* ===== CONTEÚDO CENTRAL ===== */
+    .ritual-container {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+      backdrop-filter: blur(1px);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+    .logo {
+      width: 96px;
+      margin-bottom: 20px;
+      animation: pulse 2.2s infinite;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      margin: 0 0 12px;
+      text-shadow: 0 0 12px rgba(255,255,255,0.25);
+    }
+
+    .mensagem {
+      font-size: 0.95rem;
+      opacity: 0.85;
+      min-height: 1.4em;
+      transition: opacity 0.4s ease;
+    }
+
+    /* ===== SIGILO ANIMADO ===== */
+    .sigilo {
+      margin-top: 30px;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.25);
+      animation: spin 7s linear infinite;
+      box-shadow: 0 0 25px rgba(255,255,255,0.15);
+    }
+
+    /* ===== ANIMAÇÕES ===== */
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+      0% { opacity: .6; }
+      50% { opacity: 1; }
+      100% { opacity: .6; }
+    }
+
+    /* ===== RESPONSIVO ===== */
+    @media (min-width: 768px) {
+      h1 {
+        font-size: 1.6rem;
+      }
+
+      .mensagem {
+        font-size: 1.05rem;
+      }
+
+      .sigilo {
+        width: 140px;
+        height: 140px;
+      }
     }
   </style>
 </head>
 
-<body class="min-h-screen flex items-center justify-center text-slate-200">
+<body>
 
-  <div class="text-center fade-in">
+  <!-- FUNDO -->
+  <div class="background"></div>
 
-    <!-- LOGO -->
-    <div class="ritual-glow inline-block p-6 mb-6">
-      <img
-        src="./assets/cigana.jpg"
-        alt="Lumina"
-        class="h-24 mx-auto"
-      />
-    </div>
+  <!-- CONTEÚDO -->
+  <div class="ritual-container">
+    <img src="./assets/LOGO.png" alt="Lumina" class="logo" />
 
-    <!-- TEXTO -->
-    <h1 class="text-sm tracking-[0.4em] mb-2 opacity-80">
-      PORTAL LUMINA
-    </h1>
+    <h1 id="nomeUsuario">Saudações</h1>
 
-    <p id="nomeUsuario" class="text-lg font-semibold mb-1">
-      —
+    <p id="mensagemMistica" class="mensagem">
+      Preparando o círculo…
     </p>
 
-    <p class="text-xs opacity-60 tracking-widest">
-      Selando o campo de leitura…
-    </p>
-
+    <div class="sigilo"></div>
   </div>
 
-<script>
-  const token = sessionStorage.getItem('lumina_token');
-  const nome = sessionStorage.getItem('lumina_nome');
+  <!-- SCRIPT -->
+  <script>
+    const token = sessionStorage.getItem('lumina_token');
+    const nome = sessionStorage.getItem('lumina_nome');
 
-  if (!token) {
-    window.location.replace('./index.html');
-  }
+    // 🔐 Proteção direta
+    if (!token) {
+      window.location.replace('./index.html');
+    }
 
-  document.getElementById('nomeUsuario').innerText =
-    nome ? `Bem-vindo(a), ${nome}` : 'Bem-vindo(a), Estudante Lumina';
+    // Nome do usuário
+    document.getElementById('nomeUsuario').innerText =
+      nome ? `Saudações, ${nome}` : 'Saudações, Estudante Lumina';
 
-  // 🚫 Bloqueia botão VOLTAR
-  history.pushState(null, '', location.href);
-  window.onpopstate = () => {
+    // 🔮 Mensagens místicas variáveis
+    const mensagens = [
+      'Traçando o círculo de proteção…',
+      'Alinhando as forças do destino…',
+      'Abrindo os selos do oráculo…',
+      'Os símbolos reconhecem sua presença…',
+      'A mesa se organiza em silêncio…',
+      'O guardião autoriza a passagem…'
+    ];
+
+    const mensagemEl = document.getElementById('mensagemMistica');
+    let index = 0;
+
+    setInterval(() => {
+      mensagemEl.style.opacity = 0;
+      setTimeout(() => {
+        mensagemEl.innerText = mensagens[index % mensagens.length];
+        mensagemEl.style.opacity = 0.85;
+        index++;
+      }, 300);
+    }, 800);
+
+    // 🚫 Bloqueio do botão voltar
     history.pushState(null, '', location.href);
-  };
+    window.onpopstate = () => {
+      history.pushState(null, '', location.href);
+    };
 
-  // ⏳ Redirecionamento final
-  setTimeout(() => {
-    window.location.replace(
-      'https://lumina-1-5-downgrade-277430647911.us-west1.run.app'
-    );
-  }, 2300);
-</script>
+    // ⏳ Redirecionamento final
+    setTimeout(() => {
+      window.location.replace(
+        'https://lumina-1-5-downgrade-277430647911.us-west1.run.app'
+      );
+    }, 2800);
+  </script>
 
 </body>
 </html>
