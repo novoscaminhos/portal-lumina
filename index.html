@@ -90,8 +90,8 @@ async function validarToken() {
       sessionStorage.setItem('lumina_nome', tokens[token].nome);
       sessionStorage.setItem('lumina_token', token);
 
-      window.location.href =
-        'https://lumina-1-5-downgrade-277430647911.us-west1.run.app';
+      window.location.href = './splash.html';
+
     } else {
       document.getElementById('erro').classList.remove('hidden');
     }
