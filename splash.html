@@ -64,7 +64,6 @@
   </div>
 
 <script>
-  // 🔐 Proteção básica
   const token = sessionStorage.getItem('lumina_token');
   const nome = sessionStorage.getItem('lumina_nome');
 
@@ -72,11 +71,10 @@
     window.location.replace('./index.html');
   }
 
-  // 👤 Nome do usuário
   document.getElementById('nomeUsuario').innerText =
     nome ? `Bem-vindo(a), ${nome}` : 'Bem-vindo(a), Estudante Lumina';
 
-  // 🚫 Bloqueio do botão voltar
+  // 🚫 Bloqueia botão VOLTAR
   history.pushState(null, '', location.href);
   window.onpopstate = () => {
     history.pushState(null, '', location.href);
