@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lumina — Preparando Acesso</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./assets/favicon.ico" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      background: radial-gradient(circle at center, #1e1b4b, #020617);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center text-slate-200">
+
+  <div class="text-center">
+    <img
+      src="./assets/LOGO.png"
+      alt="Lumina"
+      class="h-24 mx-auto mb-6 animate-pulse"
+    />
+
+    <h1 class="text-lg tracking-widest mb-2">
+      LUMINA
+    </h1>
+
+    <p class="text-sm opacity-70">
+      Abrindo o campo de leitura…
+    </p>
+  </div>
+
+<script>
+  const token = sessionStorage.getItem('lumina_token');
+
+  // segurança básica
+  if (!token) {
+    window.location.href = './index.html';
+  }
+
+  setTimeout(() => {
+    window.location.href =
+      'https://lumina-1-5-downgrade-277430647911.us-west1.run.app';
+  }, 2200);
+</script>
+
+</body>
+</html>
