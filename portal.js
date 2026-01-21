@@ -40,7 +40,7 @@ async function validarToken() {
   localStorage.setItem("lumina_nome", registro.nome);
 
   setTimeout(() => {
-    const destino = "https://lumina-1-5-downgrade-277430647911.us-west1.run.app";
+    const destino = "https://lumina-1-6-beta-277430647911.us-west1.run.app";
     window.location.href = `${destino}?token=${encodeURIComponent(registro.token)}&nome=${encodeURIComponent(registro.nome)}`;
   }, 1500);
 
