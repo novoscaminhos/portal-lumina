@@ -18,7 +18,6 @@
       overflow: hidden;
     }
 
-    /* ===== FUNDO ===== */
     .background {
       position: fixed;
       inset: 0;
@@ -40,7 +39,6 @@
           rgba(0,0,0,0.95) 100%);
     }
 
-    /* ===== CONTEÚDO ===== */
     .ritual-container {
       position: relative;
       z-index: 2;
@@ -83,7 +81,6 @@
       text-transform: uppercase;
     }
 
-    /* ===== SIGILO ===== */
     .sigilo {
       margin-top: 32px;
       width: 120px;
@@ -94,7 +91,6 @@
       box-shadow: 0 0 25px rgba(255,255,255,0.15);
     }
 
-    /* ===== BARRA DE PROGRESSÃO ===== */
     .progress-container {
       position: fixed;
       bottom: 0;
@@ -117,7 +113,6 @@
       transition: width 0.3s ease;
     }
 
-    /* ===== ANIMAÇÕES ===== */
     @keyframes spin {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
@@ -127,12 +122,6 @@
       0% { opacity: .6; }
       50% { opacity: 1; }
       100% { opacity: .6; }
-    }
-
-    @media (min-width: 768px) {
-      h1 { font-size: 1.7rem; }
-      .mensagem { font-size: 1.05rem; }
-      .sigilo { width: 140px; height: 140px; }
     }
   </style>
 </head>
@@ -144,10 +133,10 @@
   <div class="ritual-container">
     <img src="./assets/LOGO.png" alt="Lumina" class="logo" />
 
-    <h1 id="nomeUsuario">Saudações</h1>
+    <h1>Preparando o Acesso</h1>
 
     <p id="mensagemMistica" class="mensagem">
-      Preparando o círculo…
+      Alinhando os símbolos…
     </p>
 
     <div id="faseLua" class="fase-lua"></div>
@@ -155,98 +144,84 @@
     <div class="sigilo"></div>
   </div>
 
-  <!-- PROGRESSO -->
   <div class="progress-container">
     <div id="progressBar" class="progress-bar"></div>
   </div>
 
-  <script>
-    const token = sessionStorage.getItem('lumina_token');
-    const nome = sessionStorage.getItem('lumina_nome');
+<script>
+const APP_URL = 'https://lumina-1-6-beta-277430647911.us-west1.run.app';
 
-    if (!token) {
-      window.location.replace('./index.html');
-    }
+// Se não houver modo de acesso definido, volta ao portal
+const accessType = localStorage.getItem('lumina_access_type');
+if (!accessType) {
+  window.location.replace('./index.html');
+}
 
-    document.getElementById('nomeUsuario').innerText =
-      nome ? `Saudações, ${nome}` : 'Saudações, Estudante Lumina';
+// Fase da lua (visual apenas)
+function calcularFaseDaLua() {
+  const now = new Date();
+  const lp = 2551443;
+  const newMoon = new Date('2000-01-06T18:14:00Z').getTime();
+  const phase = ((now.getTime() - newMoon) / 1000) % lp;
+  const index = Math.floor((phase / lp) * 8);
 
-    /* ===== FASE DA LUA ===== */
-    function calcularFaseDaLua() {
-      const now = new Date();
-      const lp = 2551443; // ciclo lunar em segundos
-      const newMoon = new Date('2000-01-06T18:14:00Z').getTime();
-      const phase = ((now.getTime() - newMoon) / 1000) % lp;
+  const fases = [
+    'Lua Nova — Intenções são semeadas',
+    'Lua Crescente — Caminhos se abrem',
+    'Quarto Crescente — Forças se organizam',
+    'Lua Gibosa Crescente — Energia em ascensão',
+    'Lua Cheia — Revelações e clareza',
+    'Lua Gibosa Minguante — Sabedoria integrada',
+    'Quarto Minguante — Liberações necessárias',
+    'Lua Minguante — Silêncio e preparação'
+  ];
 
-      const index = Math.floor((phase / lp) * 8);
+  return fases[index] || fases[0];
+}
 
-      const fases = [
-        'Lua Nova — Intenções são semeadas',
-        'Lua Crescente — Caminhos se abrem',
-        'Quarto Crescente — Forças se organizam',
-        'Lua Gibosa Crescente — Energia em ascensão',
-        'Lua Cheia — Revelações e clareza',
-        'Lua Gibosa Minguante — Sabedoria integrada',
-        'Quarto Minguante — Liberações necessárias',
-        'Lua Minguante — Silêncio e preparação'
-      ];
+document.getElementById('faseLua').innerText = calcularFaseDaLua();
 
-      return fases[index] || fases[0];
-    }
+// Mensagens
+const mensagens = [
+  'Traçando o círculo de proteção…',
+  'Alinhando as forças do destino…',
+  'Abrindo os selos do oráculo…',
+  'Os símbolos reconhecem sua presença…',
+  'A mesa se organiza em silêncio…'
+];
 
-    document.getElementById('faseLua').innerText =
-      calcularFaseDaLua();
+const mensagemEl = document.getElementById('mensagemMistica');
+let msgIndex = 0;
 
-    /* ===== MENSAGENS MÍSTICAS ===== */
-    const mensagens = [
-      'Traçando o círculo de proteção…',
-      'Alinhando as forças do destino…',
-      'Abrindo os selos do oráculo…',
-      'Os símbolos reconhecem sua presença…',
-      'A mesa se organiza em silêncio…',
-      'O guardião autoriza a passagem…'
-    ];
+setInterval(() => {
+  mensagemEl.style.opacity = 0;
+  setTimeout(() => {
+    mensagemEl.innerText = mensagens[msgIndex % mensagens.length];
+    mensagemEl.style.opacity = 0.85;
+    msgIndex++;
+  }, 300);
+}, 800);
 
-    const mensagemEl = document.getElementById('mensagemMistica');
-    let msgIndex = 0;
+// Barra de progresso
+const progressBar = document.getElementById('progressBar');
+const duracao = 2800;
+const inicio = Date.now();
 
-    setInterval(() => {
-      mensagemEl.style.opacity = 0;
-      setTimeout(() => {
-        mensagemEl.innerText = mensagens[msgIndex % mensagens.length];
-        mensagemEl.style.opacity = 0.85;
-        msgIndex++;
-      }, 300);
-    }, 800);
+const progressoInterval = setInterval(() => {
+  const elapsed = Date.now() - inicio;
+  const percent = Math.min((elapsed / duracao) * 100, 100);
+  progressBar.style.width = percent + '%';
 
-    /* ===== BARRA DE PROGRESSO ===== */
-    const progressBar = document.getElementById('progressBar');
-    const duracao = 2800;
-    const inicio = Date.now();
+  if (percent >= 100) {
+    clearInterval(progressoInterval);
+  }
+}, 100);
 
-    const progressoInterval = setInterval(() => {
-      const elapsed = Date.now() - inicio;
-      const percent = Math.min((elapsed / duracao) * 100, 100);
-      progressBar.style.width = percent + '%';
-
-      if (percent >= 100) {
-        clearInterval(progressoInterval);
-      }
-    }, 100);
-
-    /* ===== BLOQUEIO DO VOLTAR ===== */
-    history.pushState(null, '', location.href);
-    window.onpopstate = () => {
-      history.pushState(null, '', location.href);
-    };
-
-    /* ===== REDIRECIONAMENTO ===== */
-    setTimeout(() => {
-      window.location.replace(
-        'https://lumina-1-6-beta-277430647911.us-west1.run.app'
-      );
-    }, duracao);
-  </script>
+// Redirecionamento final
+setTimeout(() => {
+  window.location.replace(APP_URL);
+}, duracao);
+</script>
 
 </body>
 </html>
