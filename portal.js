@@ -2,15 +2,21 @@ async function validarToken() {
   const input = document.getElementById("tokenInput");
   const mensagem = document.getElementById("mensagem");
 
-  const tokenDigitado = input.value.trim();
+  const tokenDigitado = input.value.trim().toUpperCase();
 
   if (!tokenDigitado) {
     mensagem.textContent = "Informe sua chave Lumina.";
     return;
   }
 
-  const res = await fetch("./tokens.json");
-  const data = await res.json();
+  let data;
+  try {
+    const res = await fetch("./tokens.json");
+    data = await res.json();
+  } catch (e) {
+    mensagem.textContent = "Erro ao validar acesso.";
+    return;
+  }
 
   const registro = data.tokens.find(t => t.token === tokenDigitado);
 
@@ -29,18 +35,17 @@ async function validarToken() {
     }
   }
 
-  // Mensagem personalizada
+  // Feedback visual
   mensagem.innerHTML = `✨ Olá, <strong>${registro.nome}</strong>.<br>Preparando seu acesso...`;
 
-  // Mensagem personalizada
-  mensagem.innerHTML = `✨ Olá, <strong>${registro.nome}</strong>.<br>Preparando seu acesso...`;
+  // 🔐 Concessão de acesso FULL
+  localStorage.setItem("lumina_access_type", "full");
 
-  // 🔐 Segurança Nível 1 — salvar no dispositivo
-  localStorage.setItem("lumina_token", registro.token);
-  localStorage.setItem("lumina_nome", registro.nome);
+  // Opcional: identidade local (não é segurança)
+  localStorage.setItem("lumina_user_name", registro.nome);
 
+  // Redireciona para o ritual
   setTimeout(() => {
-    const destino = "https://lumina-1-6-beta-277430647911.us-west1.run.app";
-    window.location.href = `${destino}?token=${encodeURIComponent(registro.token)}&nome=${encodeURIComponent(registro.nome)}`;
+    window.location.href = "./splash.html";
   }, 1500);
-
+}
