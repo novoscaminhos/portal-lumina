@@ -218,9 +218,12 @@ const progressoInterval = setInterval(() => {
 }, 100);
 
 // Redirecionamento final
+// Redirecionamento final
 setTimeout(() => {
+  localStorage.removeItem('lumina_access_type');
   window.location.replace(APP_URL);
 }, duracao);
+
 </script>
 
 </body>
