@@ -152,7 +152,7 @@
 const APP_URL = 'https://lumina-1-6-beta-277430647911.us-west1.run.app';
 
 // Se não houver modo de acesso definido, volta ao portal
-const accessType = localStorage.setItem("lumina_access_type", "full");
+const accessType = localStorage.getItem('lumina_access_type');
 if (!accessType) {
   window.location.replace('./index.html');
 }
