@@ -95,9 +95,9 @@ if (localStorage.getItem('lumina_trial_consumed') === 'true') {
 }
 
 function entrarCompleto() {
+  localStorage.setItem('lumina_access_type', 'full');
   window.location.href = './acesso.html';
 }
-
 
 function iniciarTrial() {
   localStorage.setItem('lumina_access_type', 'trial');
