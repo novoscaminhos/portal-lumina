@@ -230,11 +230,24 @@ const progressoInterval = setInterval(() => {
 setTimeout(() => {
   const accessType = localStorage.getItem('lumina_access_type') || 'trial';
 
+  // 🚫 BLOQUEIO: trial já consumido
+  if (
+    accessType === 'trial' &&
+    localStorage.getItem('lumina_trial_consumed') === 'true'
+  ) {
+    localStorage.setItem('lumina_access_status', 'trial_expired');
+    localStorage.removeItem('lumina_access_type');
+    window.location.replace('./bloqueado.html');
+    return;
+  }
+
+  // ✅ ACESSO VÁLIDO
   const url =
     accessType === 'full'
       ? `${APP_URL}?access=full`
       : `${APP_URL}?access=trial`;
 
+  // Limpa apenas o tipo de acesso (o app já recebeu a intenção)
   localStorage.removeItem('lumina_access_type');
 
   window.location.replace(url);
