@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lumina — Termos de Uso e Consentimento</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      background: radial-gradient(circle at top, #111827, #000);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center text-slate-200">
+
+  <div class="max-w-3xl w-full bg-slate-900 rounded-2xl shadow-2xl p-8">
+
+    <!-- LOGO -->
+    <div class="flex justify-center mb-6">
+      <img src="./assets/LOGO.png" alt="Lumina" class="h-16">
+    </div>
+
+    <h1 class="text-center text-xl font-semibold tracking-wide mb-4">
+      TERMOS DE USO E CONSENTIMENTO
+    </h1>
+
+    <p class="text-sm text-slate-400 text-center mb-6">
+      Leia atentamente antes de prosseguir. O acesso ao Lumina é pessoal,
+      intransferível e monitorado.
+    </p>
+
+    <!-- TEXTO DOS TERMOS -->
+    <div class="bg-slate-800 rounded-lg p-4 text-sm text-slate-300 space-y-3 mb-6 max-h-64 overflow-y-auto">
+
+      <p>
+        O sistema <strong>Lumina</strong> é uma ferramenta de estudo simbólico,
+        espiritual e oracular, desenvolvida por <strong>Lunara Terapias</strong>,
+        sob responsabilidade de <strong>Celso Luiz</strong>.
+      </p>
+
+      <p>
+        O acesso concedido é <strong>individual, pessoal e vinculado à chave
+        fornecida</strong>. O compartilhamento do link, da chave ou do acesso
+        caracteriza uso não autorizado.
+      </p>
+
+      <p>
+        O acesso pode ser monitorado, suspenso ou encerrado a qualquer momento
+        em caso de violação das regras, uso indevido ou tentativa de
+        redistribuição.
+      </p>
+
+      <p>
+        O Lumina não substitui aconselhamento profissional, médico, jurídico
+        ou psicológico. O uso das informações é de responsabilidade exclusiva
+        do usuário.
+      </p>
+
+      <p>
+        O sistema está em constante evolução. Ajustes, mudanças visuais e
+        funcionais podem ocorrer sem aviso prévio.
+      </p>
+
+    </div>
+
+    <!-- CHECKBOXES -->
+    <div class="space-y-3 text-sm mb-6">
+      <label class="flex items-start gap-2">
+        <input type="checkbox" class="mt-1 term-check">
+        <span>Li e compreendi o funcionamento do sistema Lumina.</span>
+      </label>
+
+      <label class="flex items-start gap-2">
+        <input type="checkbox" class="mt-1 term-check">
+        <span>Estou ciente de que o acesso é pessoal e intransferível.</span>
+      </label>
+
+      <label class="flex items-start gap-2">
+        <input type="checkbox" class="mt-1 term-check">
+        <span>Reconheço que o compartilhamento do acesso é proibido.</span>
+      </label>
+
+      <label class="flex items-start gap-2">
+        <input type="checkbox" class="mt-1 term-check">
+        <span>Compreendo que o uso indevido pode resultar em bloqueio.</span>
+      </label>
+
+      <label class="flex items-start gap-2">
+        <input type="checkbox" class="mt-1 term-check">
+        <span>Aceito integralmente os termos apresentados.</span>
+      </label>
+    </div>
+
+    <!-- BOTÃO -->
+    <button
+      id="confirmarBtn"
+      disabled
+      onclick="confirmarTermos()"
+      class="w-full bg-red-800 opacity-50 cursor-not-allowed text-white py-3 rounded-lg font-semibold tracking-wider transition"
+    >
+      CONFIRMAR E PROSSEGUIR
+    </button>
+
+    <p class="text-xs text-slate-500 text-center mt-4">
+      Este aceite fica registrado neste dispositivo.
+    </p>
+
+  </div>
+
+<script>
+  // Segurança básica: só entra aqui se veio do acesso completo
+  const accessType = localStorage.getItem('lumina_access_type');
+  if (accessType !== 'full') {
+    window.location.replace('./index.html');
+  }
+
+  const checks = document.querySelectorAll('.term-check');
+  const btn = document.getElementById('confirmarBtn');
+
+  checks.forEach(check => {
+    check.addEventListener('change', () => {
+      const allChecked = Array.from(checks).every(c => c.checked);
+      btn.disabled = !allChecked;
+      btn.classList.toggle('opacity-50', !allChecked);
+      btn.classList.toggle('cursor-not-allowed', !allChecked);
+    });
+  });
+
+  function confirmarTermos() {
+    localStorage.setItem('lumina_terms_accepted', 'true');
+    window.location.href = './splash.html';
+  }
+</script>
+
+</body>
+</html>
