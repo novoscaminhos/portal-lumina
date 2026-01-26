@@ -1,19 +1,23 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <title>Lumina — Portal de Acesso</title>
-  <!-- Open Graph / WhatsApp / Facebook -->
-<meta property="og:title" content="LUMINA — Portal de Acesso ao Oráculo" />
-<meta property="og:description" content="Entre no sistema de estudos do Baralho Cigano. Acesso completo ou degustação guiada." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://novoscaminhos.github.io/portal-lumina/" />
-<meta property="og:image" content="https://novoscaminhos.github.io/portal-lumina/assets/preview.jpg" />
 
-<!-- Extra (opcional, mas ajuda) -->
-<meta property="og:locale" content="pt_BR" />
-<meta name="twitter:card" content="summary_large_image" />
+  <!-- PWA -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#7f1d1d">
+
+  <!-- Open Graph / WhatsApp / Facebook -->
+  <meta property="og:title" content="LUMINA — Portal de Acesso ao Oráculo" />
+  <meta property="og:description" content="Entre no sistema de estudos do Baralho Cigano. Acesso completo ou degustação guiada." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://novoscaminhos.github.io/portal-lumina/" />
+  <meta property="og:image" content="https://novoscaminhos.github.io/portal-lumina/assets/preview.jpg" />
+
+  <!-- Extra -->
+  <meta property="og:locale" content="pt_BR" />
+  <meta name="twitter:card" content="summary_large_image" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
@@ -85,25 +89,35 @@
     </div>
   </div>
 
-<script>
-const APP_URL = 'https://lumina-1-6-beta-277430647911.us-west1.run.app';
+  <!-- LÓGICA -->
+  <script>
+    const APP_URL = 'https://lumina-1-6-beta-277430647911.us-west1.run.app';
 
-// Ocultar trial se já foi consumido
-if (localStorage.getItem('lumina_trial_consumed') === 'true') {
-  document.getElementById('btnTrial').classList.add('hidden');
-  document.getElementById('trialInfo').classList.remove('hidden');
-}
+    // Ocultar trial se já foi consumido
+    if (localStorage.getItem('lumina_trial_consumed') === 'true') {
+      document.getElementById('btnTrial')?.classList.add('hidden');
+      document.getElementById('trialInfo')?.classList.remove('hidden');
+    }
 
-function entrarCompleto() {
-  localStorage.setItem('lumina_access_type', 'full');
-  window.location.href = './acesso.html';
-}
+    function entrarCompleto() {
+      localStorage.setItem('lumina_access_type', 'full');
+      window.location.href = './acesso.html';
+    }
 
-function iniciarTrial() {
-  localStorage.setItem('lumina_access_type', 'trial');
-  window.location.href = './splash.html';
-}
-</script>
+    function iniciarTrial() {
+      localStorage.setItem('lumina_access_type', 'trial');
+      window.location.href = './splash.html';
+    }
+  </script>
+
+  <!-- SERVICE WORKER -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js');
+      });
+    }
+  </script>
 
 </body>
 </html>
