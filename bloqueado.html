@@ -45,9 +45,12 @@
   const status = localStorage.getItem('lumina_access_status');
 
   const mensagens = {
-    trial_expired: 'O período de degustação foi encerrado neste dispositivo.',
-    violation: 'Foi detectada violação dos termos de uso.',
-    default: 'O acesso não está autorizado no momento.'
+    trial_expired:
+      'O período de degustação foi concluído neste dispositivo. Para continuar utilizando o Lumina, é necessário solicitar uma nova chave de acesso ao administrador.',
+    violation:
+      'Foi detectada violação dos termos de uso. O acesso foi suspenso. Entre em contato com o administrador para avaliação.',
+    default:
+      'O acesso não está autorizado no momento. Para mais informações, entre em contato com o administrador.'
   };
 
   document.getElementById('mensagem').innerText =
@@ -63,5 +66,18 @@
   window.onpopstate = () => history.pushState(null, '', location.href);
 </script>
 
+<a
+  href="https://wa.me/5516997934558?text=Olá!%0A%0AEstou entrando em contato sobre o acesso ao sistema Lumina.%0A%0AMotivo do contato:%0A- Período de degustação encerrado / erro de acesso%0A%0ADados:%0ANome:%0AData aproximada do acesso:%0A%0ALi e compreendo que o acesso ao Lumina é individual, pessoal e vinculado a uma chave exclusiva.%0A%0AAguardo orientações.%0A"
+  target="_blank"
+  class="block w-full mt-4 border border-green-600 text-green-500 hover:bg-green-600 hover:text-white py-3 rounded-lg font-semibold tracking-wider transition text-center"
+>
+  CONTATAR ADMINISTRADOR
+</a>
+
+
+<p class="text-xs text-slate-500 mt-6 text-center">
+  Lumina · Acesso individual vinculado a chave exclusiva<br>
+  Administração: Lunara Terapias
+</p>
 </body>
 </html>
