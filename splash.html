@@ -34,8 +34,8 @@
       inset: 0;
       background:
         radial-gradient(circle at center,
-          rgba(0,0,0,0) 40%,
-          rgba(0,0,0,0.65) 75%,
+          rgba(0,0,0,0.15) 35%,
+          rgba(0,0,0,0.7) 75%,
           rgba(0,0,0,0.95) 100%);
     }
 
@@ -49,45 +49,56 @@
       justify-content: center;
       text-align: center;
       padding: 24px;
-      backdrop-filter: blur(1px);
     }
 
     .logo {
       width: 96px;
       margin-bottom: 20px;
-      animation: pulse 2.2s infinite;
+      animation: pulse 2.5s infinite;
     }
 
     h1 {
       font-size: 1.5rem;
       font-weight: 600;
       letter-spacing: 0.08em;
-      margin: 0 0 10px;
-      text-shadow: 0 0 12px rgba(255,255,255,0.25);
+      margin: 0 0 14px;
+      text-shadow: 0 0 12px rgba(255,255,255,0.35);
+    }
+
+    /* CAIXA DE TEXTO COM CONTRASTE */
+    .mensagem-box {
+      max-width: 420px;
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 14px;
+      padding: 18px 20px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 0 30px rgba(0,0,0,0.6);
     }
 
     .mensagem {
       font-size: 0.95rem;
-      opacity: 0.85;
-      min-height: 1.6em;
-      transition: opacity 0.4s ease;
+      line-height: 1.6;
+      opacity: 0.95;
+      min-height: 3.2em;
+      transition: opacity 0.8s ease;
     }
 
     .fase-lua {
-      margin-top: 8px;
+      margin-top: 14px;
       font-size: 0.7rem;
       letter-spacing: 0.25em;
-      opacity: 0.55;
+      opacity: 0.6;
       text-transform: uppercase;
     }
 
     .sigilo {
-      margin-top: 32px;
+      margin-top: 28px;
       width: 120px;
       height: 120px;
       border-radius: 50%;
       border: 2px solid rgba(255,255,255,0.25);
-      animation: spin 7s linear infinite;
+      animation: spin 8s linear infinite;
       box-shadow: 0 0 25px rgba(255,255,255,0.15);
     }
 
@@ -110,7 +121,7 @@
         #818cf8,
         #38bdf8
       );
-      transition: width 0.3s ease;
+      transition: width 0.4s ease;
     }
 
     @keyframes spin {
@@ -135,11 +146,12 @@
 
     <h1>Preparando o Acesso</h1>
 
-    <p id="mensagemMistica" class="mensagem">
-      Alinhando os símbolos…
-    </p>
-
-    <div id="faseLua" class="fase-lua"></div>
+    <div class="mensagem-box">
+      <p id="mensagemMistica" class="mensagem">
+        Alinhando os símbolos…
+      </p>
+      <div id="faseLua" class="fase-lua"></div>
+    </div>
 
     <div class="sigilo"></div>
   </div>
@@ -151,13 +163,13 @@
 <script>
 const APP_URL = 'https://lumina-1-6-beta-277430647911.us-west1.run.app';
 
-// Se não houver modo de acesso definido, volta ao portal
+// Bloqueio de acesso direto
 const accessType = localStorage.getItem('lumina_access_type');
 if (!accessType) {
   window.location.replace('./index.html');
 }
 
-// Fase da lua (visual apenas)
+// Fase da lua
 function calcularFaseDaLua() {
   const now = new Date();
   const lp = 2551443;
@@ -166,14 +178,11 @@ function calcularFaseDaLua() {
   const index = Math.floor((phase / lp) * 8);
 
   const fases = [
-    'Lua Nova — Intenções são semeadas',
-    'Lua Crescente — Caminhos se abrem',
-    'Quarto Crescente — Forças se organizam',
-    'Lua Gibosa Crescente — Energia em ascensão',
-    'Lua Cheia — Revelações e clareza',
-    'Lua Gibosa Minguante — Sabedoria integrada',
-    'Quarto Minguante — Liberações necessárias',
-    'Lua Minguante — Silêncio e preparação'
+    'Estamos na Lua Nova: As intenções são semeadas',
+    'Estamos na Lua Crescente: Os caminhos se abrem',
+    'Estamos no Quarto Crescente: As forças se organizam',
+    'Estamos na Lua Cheia: Momento de revelações e clareza',
+    'Estamos na Lua Minguante: Momento de silêncio e preparação'
   ];
 
   return fases[index] || fases[0];
@@ -181,30 +190,30 @@ function calcularFaseDaLua() {
 
 document.getElementById('faseLua').innerText = calcularFaseDaLua();
 
-// Mensagens
+// Mensagens (menos, mais profundas)
 const mensagens = [
-  'Traçando o círculo de proteção…',
-  'Alinhando as forças do destino…',
-  'Abrindo os selos do oráculo…',
-  'Os símbolos reconhecem sua presença…',
-  'A mesa se organiza em silêncio…'
+  'Traçando o círculo de proteção e presença.',
+  'Os símbolos se alinham ao seu campo de intenção.',
+  'O oráculo reconhece sua entrada no ritual.',
+  'A mesa se prepara para revelar o que deve ser visto.'
 ];
 
 const mensagemEl = document.getElementById('mensagemMistica');
 let msgIndex = 0;
 
+// Troca mais lenta (qualidade > quantidade)
 setInterval(() => {
   mensagemEl.style.opacity = 0;
   setTimeout(() => {
     mensagemEl.innerText = mensagens[msgIndex % mensagens.length];
-    mensagemEl.style.opacity = 0.85;
+    mensagemEl.style.opacity = 0.95;
     msgIndex++;
-  }, 300);
-}, 800);
+  }, 600);
+}, 2600);
 
 // Barra de progresso
 const progressBar = document.getElementById('progressBar');
-const duracao = 2800;
+const duracao = 8000; // mais tempo = leitura confortável
 const inicio = Date.now();
 
 const progressoInterval = setInterval(() => {
@@ -215,7 +224,7 @@ const progressoInterval = setInterval(() => {
   if (percent >= 100) {
     clearInterval(progressoInterval);
   }
-}, 100);
+}, 120);
 
 // Redirecionamento final
 setTimeout(() => {
@@ -230,7 +239,6 @@ setTimeout(() => {
 
   window.location.replace(url);
 }, duracao);
-
 </script>
 
 </body>
