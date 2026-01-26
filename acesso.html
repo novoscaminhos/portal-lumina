@@ -2,100 +2,71 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Lumina — Chave de Acesso</title>
+  <title>Lumina — Validação de Acesso</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
     body {
-      background: radial-gradient(circle at center, #0f172a, #020617);
+      background: radial-gradient(circle at center, #020617, #000);
     }
   </style>
 </head>
 
 <body class="min-h-screen flex items-center justify-center text-slate-200">
 
-  <div class="max-w-md w-full bg-slate-900/90 backdrop-blur rounded-2xl shadow-2xl p-8">
+  <div class="max-w-md w-full bg-slate-900 rounded-2xl shadow-2xl p-8 text-center">
 
-    <!-- LOGO -->
     <div class="flex justify-center mb-6">
       <img src="./assets/LOGO.png" alt="Lumina" class="h-16">
     </div>
 
-    <h1 class="text-center text-lg font-semibold tracking-widest mb-2">
-      ACESSO RESTRITO
+    <h1 class="text-lg font-semibold tracking-wide mb-3">
+      Validando Acesso
     </h1>
 
-    <p class="text-center text-sm text-slate-400 mb-6">
-      Insira sua chave ritual para atravessar o portal
+    <p class="text-sm text-slate-400 mb-6">
+      Aguarde enquanto verificamos as condições de entrada.
     </p>
 
-    <!-- INPUT -->
-    <input
-      id="tokenInput"
-      type="text"
-      placeholder="LUMINA-XXXX-XXXX"
-      class="w-full px-4 py-3 mb-4 rounded-lg bg-slate-800 border border-slate-600 text-center tracking-widest uppercase focus:outline-none focus:ring-2 focus:ring-indigo-500"
-    />
-
-    <!-- BOTÃO -->
-    <button
-      onclick="validarChave()"
-      class="w-full bg-indigo-600 hover:bg-indigo-500 text-white py-3 rounded-lg font-semibold tracking-wider transition"
-    >
-      VALIDAR CHAVE
-    </button>
-
-    <!-- ERRO -->
-    <p id="erro" class="text-red-400 text-sm mt-4 hidden text-center">
-      Chave inválida ou não reconhecida.
-    </p>
-
-    <!-- VOLTAR -->
-    <div class="mt-6 text-center text-xs text-slate-400">
-      <a href="./index.html" class="hover:underline">← Voltar ao portal</a>
+    <div class="flex justify-center">
+      <div class="w-10 h-10 border-4 border-slate-600 border-t-red-700 rounded-full animate-spin"></div>
     </div>
+
+    <p class="text-xs text-slate-500 mt-6">
+      Lumina · Segurança de Acesso Ativa
+    </p>
 
   </div>
 
 <script>
-async function validarChave() {
-  const input = document.getElementById('tokenInput');
-  const erro = document.getElementById('erro');
+  /**
+   * ETAPA 2 — CONTROLE DE FLUXO
+   */
 
-  const token = input.value.trim().toUpperCase();
-  erro.classList.add('hidden');
+  // Precisa ter vindo do botão "Acesso Completo"
+  const accessType = localStorage.getItem('lumina_access_type');
 
-  if (!token) {
-    erro.innerText = 'Informe uma chave válida.';
-    erro.classList.remove('hidden');
-    return;
+  if (accessType !== 'full') {
+    // Tentativa de acesso direto ou link compartilhado
+    window.location.replace('./index.html');
   }
 
-  try {
-    const res = await fetch('./tokens.json');
-    const tokens = await res.json();
+  // Pequeno delay simbólico (psicológico + UX)
+  setTimeout(() => {
 
-    if (!tokens[token]) {
-      erro.innerText = 'Chave não reconhecida.';
-      erro.classList.remove('hidden');
-      return;
+    const termosAceitos = localStorage.getItem('lumina_terms_accepted');
+
+    if (termosAceitos === 'true') {
+      // Termos aceitos → segue para o ritual
+      window.location.replace('./splash.html');
+    } else {
+      // Não aceitou → leitura obrigatória
+      window.location.replace('./termos.html');
     }
 
-    // ✔️ AUTORIZAÇÃO CONCEDIDA
-    localStorage.setItem('lumina_access_type', 'full');
-    localStorage.setItem('lumina_token', token);
-    localStorage.setItem('lumina_nome', tokens[token].nome || 'Estudante Lumina');
-
-    // 🔁 Vai para o ritual
-    window.location.href = './splash.html';
-
-  } catch (e) {
-    console.error(e);
-    alert('Erro ao validar acesso. Verifique os arquivos do portal.');
-  }
-}
+  }, 1200);
 </script>
 
 </body>
