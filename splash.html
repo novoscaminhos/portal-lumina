@@ -65,7 +65,6 @@
       text-shadow: 0 0 12px rgba(255,255,255,0.35);
     }
 
-    /* CAIXA DE TEXTO COM CONTRASTE */
     .mensagem-box {
       max-width: 420px;
       background: rgba(0, 0, 0, 0.55);
@@ -190,7 +189,7 @@ function calcularFaseDaLua() {
 
 document.getElementById('faseLua').innerText = calcularFaseDaLua();
 
-// Mensagens (menos, mais profundas)
+// Mensagens
 const mensagens = [
   'Traçando o círculo de proteção e presença.',
   'Os símbolos se alinham ao seu campo de intenção.',
@@ -201,7 +200,6 @@ const mensagens = [
 const mensagemEl = document.getElementById('mensagemMistica');
 let msgIndex = 0;
 
-// Troca mais lenta (qualidade > quantidade)
 setInterval(() => {
   mensagemEl.style.opacity = 0;
   setTimeout(() => {
@@ -213,7 +211,7 @@ setInterval(() => {
 
 // Barra de progresso
 const progressBar = document.getElementById('progressBar');
-const duracao = 8000; // mais tempo = leitura confortável
+const duracao = 8000;
 const inicio = Date.now();
 
 const progressoInterval = setInterval(() => {
@@ -226,11 +224,11 @@ const progressoInterval = setInterval(() => {
   }
 }, 120);
 
-// Redirecionamento final
+// 🔒 REDIRECIONAMENTO FINAL + REGISTRO DEFINITIVO DO TRIAL
 setTimeout(() => {
   const accessType = localStorage.getItem('lumina_access_type') || 'trial';
 
-  // 🚫 BLOQUEIO: trial já consumido
+  // 🚫 Trial já consumido → bloqueio
   if (
     accessType === 'trial' &&
     localStorage.getItem('lumina_trial_consumed') === 'true'
@@ -241,16 +239,19 @@ setTimeout(() => {
     return;
   }
 
-  // ✅ ACESSO VÁLIDO
+  // ✅ Primeiro consumo de trial → grava de forma definitiva
+  if (accessType === 'trial') {
+    localStorage.setItem('lumina_trial_consumed', 'true');
+  }
+
   const url =
     accessType === 'full'
       ? `${APP_URL}?access=full`
       : `${APP_URL}?access=trial`;
 
-  // Limpa apenas o tipo de acesso (o app já recebeu a intenção)
   localStorage.removeItem('lumina_access_type');
-
   window.location.replace(url);
+
 }, duracao);
 </script>
 
