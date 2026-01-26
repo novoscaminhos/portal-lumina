@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lumina — Acesso Bloqueado</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      background: radial-gradient(circle at center, #020617, #000);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center text-slate-200">
+
+  <div class="max-w-lg w-full bg-slate-900 rounded-2xl shadow-2xl p-8 text-center">
+
+    <div class="flex justify-center mb-6">
+      <img src="./assets/LOGO.png" alt="Lumina" class="h-16 opacity-80">
+    </div>
+
+    <h1 class="text-xl font-semibold tracking-wide mb-4 text-red-500">
+      ACESSO BLOQUEADO
+    </h1>
+
+    <p class="text-sm text-slate-300 mb-4">
+      Este acesso foi <strong>interrompido</strong> por violação das regras
+      de uso, inconsistência de chave ou tentativa de acesso não autorizado.
+    </p>
+
+    <p class="text-sm text-slate-400 mb-6">
+      O sistema Lumina utiliza identificação por chave individual e
+      monitoramento de sessões. O compartilhamento do acesso ou uso indevido
+      não é permitido.
+    </p>
+
+    <div class="bg-slate-800 rounded-lg p-4 text-xs text-slate-400 mb-6">
+      Se você acredita que este bloqueio ocorreu por engano, entre em contato
+      diretamente com o responsável pelo sistema.
+    </div>
+
+    <button
+      onclick="voltarPortal()"
+      class="w-full bg-red-800 hover:bg-red-700 text-white py-3 rounded-lg font-semibold tracking-wider transition"
+    >
+      VOLTAR AO PORTAL
+    </button>
+
+    <p class="text-xs text-slate-500 mt-6">
+      Lumina · Segurança de Acesso Ativa
+    </p>
+
+  </div>
+
+<script>
+  function voltarPortal() {
+    // Limpeza defensiva
+    localStorage.removeItem('lumina_access_type');
+    localStorage.removeItem('lumina_terms_accepted');
+    window.location.replace('./index.html');
+  }
+</script>
+
+</body>
+</html>
