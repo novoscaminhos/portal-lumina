@@ -8,14 +8,12 @@
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#7f1d1d">
 
-  <!-- Open Graph / WhatsApp / Facebook -->
+  <!-- Open Graph -->
   <meta property="og:title" content="LUMINA — Portal de Acesso ao Oráculo" />
   <meta property="og:description" content="Entre no sistema de estudos do Baralho Cigano. Acesso completo ou degustação guiada." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://novoscaminhos.github.io/portal-lumina/" />
   <meta property="og:image" content="https://novoscaminhos.github.io/portal-lumina/assets/preview.jpg" />
-
-  <!-- Extra -->
   <meta property="og:locale" content="pt_BR" />
   <meta name="twitter:card" content="summary_large_image" />
 
@@ -58,7 +56,7 @@
         Escolha como deseja acessar o sistema
       </p>
 
-      <!-- BOTÃO ACESSO COMPLETO -->
+      <!-- ACESSO COMPLETO -->
       <button
         onclick="entrarCompleto()"
         class="w-full bg-red-800 hover:bg-red-700 text-white py-3 rounded-lg font-semibold tracking-wider transition mb-4"
@@ -66,7 +64,7 @@
         ENTRAR — ACESSO COMPLETO
       </button>
 
-      <!-- BOTÃO DEGUSTAÇÃO -->
+      <!-- TRIAL -->
       <button
         id="btnTrial"
         onclick="iniciarTrial()"
@@ -79,7 +77,7 @@
         id="trialInfo"
         class="text-xs text-slate-500 mt-4 text-center hidden"
       >
-        O período de degustação já foi utilizado.
+        O período de degustação já foi utilizado neste dispositivo.
       </p>
 
       <div class="mt-8 text-center text-xs text-slate-400">
@@ -89,11 +87,9 @@
     </div>
   </div>
 
-  <!-- LÓGICA -->
+  <!-- LÓGICA DO PORTAL -->
   <script>
-    const APP_URL = 'https://lumina-1-6-beta-277430647911.us-west1.run.app';
-
-    // Ocultar trial se já foi consumido
+    // 🔒 Se trial já foi consumido, esconde opção
     if (localStorage.getItem('lumina_trial_consumed') === 'true') {
       document.getElementById('btnTrial')?.classList.add('hidden');
       document.getElementById('trialInfo')?.classList.remove('hidden');
@@ -110,7 +106,7 @@
     }
   </script>
 
-  <!-- SERVICE WORKER -->
+  <!-- SERVICE WORKER (PWA) -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
