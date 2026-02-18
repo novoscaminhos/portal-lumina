@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lumina — Acesso Bloqueado</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./assets/favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      background: radial-gradient(circle at top, #020617, #000);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center text-slate-200">
+
+  <div class="max-w-lg w-full bg-slate-900 rounded-2xl shadow-2xl p-8 text-center">
+
+    <img src="./assets/LOGO.png" class="h-16 mx-auto mb-6" />
+
+    <h1 class="text-xl font-semibold tracking-wide mb-4 text-red-500">
+      ACESSO BLOQUEADO
+    </h1>
+
+    <p id="mensagem" class="text-sm text-slate-300 mb-6">
+      Este acesso foi encerrado.
+    </p>
+
+    <div class="space-y-4">
+      <button
+        onclick="voltarPortal()"
+        class="w-full bg-slate-800 hover:bg-slate-700 text-white py-3 rounded-lg font-semibold tracking-wider transition"
+      >
+        VOLTAR AO PORTAL
+      </button>
+
+      <div class="pt-4 border-t border-slate-800 space-y-3">
+        <a
+          href="https://wa.me/5516997934558"
+          target="_blank"
+          class="block w-full border border-green-600 text-green-500 hover:bg-green-600 hover:text-white py-3 rounded-lg font-semibold tracking-wider transition text-center"
+        >
+          CONTATO LUNARA TERAPIAS
+        </a>
+
+        <a
+          href="https://luminapage-sbjbhhka.manus.space/"
+          target="_blank"
+          class="block w-full bg-red-800 hover:bg-red-700 text-white py-3 rounded-lg font-semibold tracking-wider transition text-center"
+        >
+          CONHEÇA OS PLANOS E O APP
+        </a>
+      </div>
+    </div>
+
+    <p class="text-xs text-slate-500 mt-6">
+      Lumina · Sistema monitorado por chave de acesso
+    </p>
+
+  </div>
+
+<script>
+  const status = localStorage.getItem('lumina_access_status');
+
+  const mensagens = {
+    trial_expired:
+      'O período de degustação foi concluído neste dispositivo. Para continuar utilizando o Lumina, é necessário solicitar uma nova chave de acesso ao administrador.',
+    violation:
+      'Foi detectada violação dos termos de uso. O acesso foi suspenso. Entre em contato com o administrador para avaliação.',
+    default:
+      'O acesso não está autorizado no momento. Para mais informações, entre em contato com o administrador.'
+  };
+
+  document.getElementById('mensagem').innerText =
+    mensagens[status] || mensagens.default;
+
+  function voltarPortal() {
+    localStorage.removeItem('lumina_access_type');
+    window.location.replace('./index.html');
+  }
+
+  // Bloqueia botão voltar
+  history.pushState(null, '', location.href);
+  window.onpopstate = () => history.pushState(null, '', location.href);
+</script>
+
+
+
+</body>
+</html>
