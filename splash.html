@@ -162,13 +162,11 @@
 <script>
 const APP_URL = 'https://lumina-1-9-277430647911.us-west1.run.app';
 
-// Bloqueio de acesso direto
 const accessType = localStorage.getItem('lumina_access_type');
 if (!accessType) {
   window.location.replace('./index.html');
 }
 
-// Fase da lua
 function calcularFaseDaLua() {
   const now = new Date();
   const lp = 2551443;
@@ -189,7 +187,6 @@ function calcularFaseDaLua() {
 
 document.getElementById('faseLua').innerText = calcularFaseDaLua();
 
-// Mensagens
 const mensagens = [
   'Traçando o círculo de proteção e presença.',
   'Os símbolos se alinham ao seu campo de intenção.',
@@ -209,7 +206,6 @@ setInterval(() => {
   }, 600);
 }, 2600);
 
-// Barra de progresso
 const progressBar = document.getElementById('progressBar');
 const duracao = 8000;
 const inicio = Date.now();
@@ -224,11 +220,9 @@ const progressoInterval = setInterval(() => {
   }
 }, 120);
 
-// 🔒 REDIRECIONAMENTO FINAL + REGISTRO DEFINITIVO DO TRIAL
 setTimeout(() => {
   const accessType = localStorage.getItem('lumina_access_type') || 'trial';
 
-  // 🚫 Trial já consumido → bloqueio
   if (
     accessType === 'trial' &&
     localStorage.getItem('lumina_trial_consumed') === 'true'
@@ -239,20 +233,18 @@ setTimeout(() => {
     return;
   }
 
-  // ✅ Primeiro consumo de trial → grava de forma definitiva
   if (accessType === 'trial') {
     localStorage.setItem('lumina_trial_consumed', 'true');
     localStorage.removeItem('lumina_access_type');
     window.location.replace(`${APP_URL}?access=trial`);
   } else if (accessType === 'full') {
-    // Para acesso FULL, passamos pelo app.html local para gerenciar a sessão do iframe
+
     const token = localStorage.getItem('lumina_token');
-    const nome = localStorage.getItem('lumina_user_name');
+    const nome = localStorage.getItem('lumina_nome'); // 🔥 CORREÇÃO AQUI
     
     if (token && nome) {
       sessionStorage.setItem('lumina_token', token);
       sessionStorage.setItem('lumina_nome', nome);
-      // Mantemos o lumina_access_type até o redirecionamento final no app.html ou garantimos que ele chegue lá
       window.location.replace('./app.html');
     } else {
       window.location.replace('./login.html');
