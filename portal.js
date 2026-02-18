@@ -44,11 +44,12 @@ async function validarToken() {
   // 🔐 Gravação definitiva no dispositivo (LocalStorage)
   localStorage.setItem("lumina_access_type", "full");
   localStorage.setItem("lumina_token", tokenDigitado);
-  localStorage.setItem("lumina_user_name", registro.nome);
+
+  // 🔥 CORREÇÃO AQUI — padronização do nome
+  localStorage.setItem("lumina_nome", registro.nome);
 
   // Redireciona para a etapa de termos (obrigatória após nova validação)
   setTimeout(() => {
-    // Resetamos o aceite dos termos para garantir que o usuário leia novamente ao validar uma nova chave
     localStorage.removeItem("lumina_terms_accepted");
     window.location.href = "./termos.html";
   }, 1500);
@@ -57,7 +58,7 @@ async function validarToken() {
 // Função utilitária para limpar acesso (pode ser chamada via console se necessário)
 function limparAcessoGeral() {
   localStorage.removeItem("lumina_token");
-  localStorage.removeItem("lumina_user_name");
+  localStorage.removeItem("lumina_nome"); // 🔥 corrigido aqui
   localStorage.removeItem("lumina_access_type");
   localStorage.removeItem("lumina_terms_accepted");
   localStorage.removeItem("lumina_trial_consumed");
