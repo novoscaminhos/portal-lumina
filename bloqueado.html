@@ -28,12 +28,32 @@
       Este acesso foi encerrado.
     </p>
 
-    <button
-      onclick="voltarPortal()"
-      class="w-full bg-red-800 hover:bg-red-700 text-white py-3 rounded-lg font-semibold tracking-wider transition"
-    >
-      VOLTAR AO PORTAL
-    </button>
+    <div class="space-y-4">
+      <button
+        onclick="voltarPortal()"
+        class="w-full bg-slate-800 hover:bg-slate-700 text-white py-3 rounded-lg font-semibold tracking-wider transition"
+      >
+        VOLTAR AO PORTAL
+      </button>
+
+      <div class="pt-4 border-t border-slate-800 space-y-3">
+        <a
+          href="https://wa.me/5516997934558"
+          target="_blank"
+          class="block w-full border border-green-600 text-green-500 hover:bg-green-600 hover:text-white py-3 rounded-lg font-semibold tracking-wider transition text-center"
+        >
+          CONTATO LUNARA TERAPIAS
+        </a>
+
+        <a
+          href="https://luminapage-sbjbhhka.manus.space/"
+          target="_blank"
+          class="block w-full bg-red-800 hover:bg-red-700 text-white py-3 rounded-lg font-semibold tracking-wider transition text-center"
+        >
+          CONHEÇA OS PLANOS E O APP
+        </a>
+      </div>
+    </div>
 
     <p class="text-xs text-slate-500 mt-6">
       Lumina · Sistema monitorado por chave de acesso
@@ -66,18 +86,7 @@
   window.onpopstate = () => history.pushState(null, '', location.href);
 </script>
 
-<a
-  href="https://wa.me/5516997934558?text=Olá!%0A%0AEstou entrando em contato sobre o acesso ao sistema Lumina.%0A%0AMotivo do contato:%0A- Período de degustação encerrado / erro de acesso%0A%0ADados:%0ANome:%0AData aproximada do acesso:%0A%0ALi e compreendo que o acesso ao Lumina é individual, pessoal e vinculado a uma chave exclusiva.%0A%0AAguardo orientações.%0A"
-  target="_blank"
-  class="block w-full mt-4 border border-green-600 text-green-500 hover:bg-green-600 hover:text-white py-3 rounded-lg font-semibold tracking-wider transition text-center"
->
-  CONTATAR ADMINISTRADOR
-</a>
 
 
-<p class="text-xs text-slate-500 mt-6 text-center">
-  Lumina · Acesso individual vinculado a chave exclusiva<br>
-  Administração: Lunara Terapias
-</p>
 </body>
 </html>

@@ -252,7 +252,7 @@ setTimeout(() => {
     if (token && nome) {
       sessionStorage.setItem('lumina_token', token);
       sessionStorage.setItem('lumina_nome', nome);
-      localStorage.removeItem('lumina_access_type');
+      // Mantemos o lumina_access_type até o redirecionamento final no app.html ou garantimos que ele chegue lá
       window.location.replace('./app.html');
     } else {
       window.location.replace('./login.html');
