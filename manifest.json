@@ -1,6 +1,6 @@
 {
-  "name": "Lumina — Portal de Acesso",
-  "short_name": "Lumina",
+  "name": "Lumina 1.9 — Portal de Acesso",
+  "short_name": "Lumina 1.9",
   "description": "Portal oficial de acesso ao sistema Lumina",
   "start_url": "./index.html",
   "display": "standalone",

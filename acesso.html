@@ -45,12 +45,15 @@
    * ETAPA 2 — CONTROLE DE FLUXO
    */
 
-  // Precisa ter vindo do botão "Acesso Completo"
+  // Precisa ter vindo do botão "Acesso Completo" e ter um token gravado
   const accessType = localStorage.getItem('lumina_access_type');
+  const token = localStorage.getItem('lumina_token');
 
   if (accessType !== 'full') {
-    // Tentativa de acesso direto ou link compartilhado
     window.location.replace('./index.html');
+  } else if (!token) {
+    // Se é acesso completo mas não tem token, manda para o login
+    window.location.replace('./login.html');
   }
 
   // Pequeno delay simbólico (psicológico + UX)

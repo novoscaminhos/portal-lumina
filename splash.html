@@ -160,7 +160,7 @@
   </div>
 
 <script>
-const APP_URL = 'https://lumina-1-6-beta-277430647911.us-west1.run.app';
+const APP_URL = 'https://lumina-1-9-beta-277430647911.us-west1.run.app';
 
 // Bloqueio de acesso direto
 const accessType = localStorage.getItem('lumina_access_type');
@@ -242,15 +242,22 @@ setTimeout(() => {
   // ✅ Primeiro consumo de trial → grava de forma definitiva
   if (accessType === 'trial') {
     localStorage.setItem('lumina_trial_consumed', 'true');
+    localStorage.removeItem('lumina_access_type');
+    window.location.replace(`${APP_URL}?access=trial`);
+  } else if (accessType === 'full') {
+    // Para acesso FULL, passamos pelo app.html local para gerenciar a sessão do iframe
+    const token = localStorage.getItem('lumina_token');
+    const nome = localStorage.getItem('lumina_user_name');
+    
+    if (token && nome) {
+      sessionStorage.setItem('lumina_token', token);
+      sessionStorage.setItem('lumina_nome', nome);
+      localStorage.removeItem('lumina_access_type');
+      window.location.replace('./app.html');
+    } else {
+      window.location.replace('./login.html');
+    }
   }
-
-  const url =
-    accessType === 'full'
-      ? `${APP_URL}?access=full`
-      : `${APP_URL}?access=trial`;
-
-  localStorage.removeItem('lumina_access_type');
-  window.location.replace(url);
 
 }, duracao);
 </script>

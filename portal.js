@@ -18,14 +18,15 @@ async function validarToken() {
     return;
   }
 
-  const registro = data.tokens.find(t => t.token === tokenDigitado);
+  // O tokens.json está no formato { "TOKEN": { "nome": "Nome" } }
+  const registro = data[tokenDigitado];
 
   if (!registro) {
     mensagem.textContent = "Chave inválida ou não reconhecida.";
     return;
   }
 
-  // Validação de expiração
+  // Validação de expiração (se existir no registro)
   if (registro.expira) {
     const hoje = new Date();
     const exp = new Date(registro.expira);
@@ -36,16 +37,28 @@ async function validarToken() {
   }
 
   // Feedback visual
+  mensagem.classList.remove("text-red-500");
+  mensagem.classList.add("text-green-500");
   mensagem.innerHTML = `✨ Olá, <strong>${registro.nome}</strong>.<br>Preparando seu acesso...`;
 
-  // 🔐 Concessão de acesso FULL
+  // 🔐 Gravação definitiva no dispositivo (LocalStorage)
   localStorage.setItem("lumina_access_type", "full");
-
-  // Opcional: identidade local (não é segurança)
+  localStorage.setItem("lumina_token", tokenDigitado);
   localStorage.setItem("lumina_user_name", registro.nome);
 
-  // Redireciona para o ritual
+  // Redireciona para a etapa de validação/termos
   setTimeout(() => {
-    window.location.href = "./splash.html";
+    window.location.href = "./acesso.html";
   }, 1500);
+}
+
+// Função utilitária para limpar acesso (pode ser chamada via console se necessário)
+function limparAcessoGeral() {
+  localStorage.removeItem("lumina_token");
+  localStorage.removeItem("lumina_user_name");
+  localStorage.removeItem("lumina_access_type");
+  localStorage.removeItem("lumina_terms_accepted");
+  localStorage.removeItem("lumina_trial_consumed");
+  alert("Acesso limpo com sucesso.");
+  window.location.href = "./index.html";
 }

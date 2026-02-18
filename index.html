@@ -9,7 +9,7 @@
   <meta name="theme-color" content="#7f1d1d">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="LUMINA — Portal de Acesso ao Oráculo" />
+  <meta property="og:title" content="LUMINA 1.9 — Portal de Acesso ao Oráculo" />
   <meta property="og:description" content="Entre no sistema de estudos do Baralho Cigano. Acesso completo ou degustação guiada." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://novoscaminhos.github.io/portal-lumina/" />
@@ -81,7 +81,7 @@
       </p>
 
       <div class="mt-8 text-center text-xs text-slate-400">
-        Lumina 1.6 · Sistema de Estudo de Baralho Cigano
+        Lumina 1.9 · Sistema de Estudo de Baralho Cigano
       </div>
 
     </div>
@@ -97,7 +97,12 @@
 
     function entrarCompleto() {
       localStorage.setItem('lumina_access_type', 'full');
-      window.location.href = './acesso.html';
+      // Se já tem token, vai direto para validação/termos, senão pede login
+      if (localStorage.getItem('lumina_token')) {
+        window.location.href = './acesso.html';
+      } else {
+        window.location.href = './login.html';
+      }
     }
 
     function iniciarTrial() {

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lumina 1.9 — Chave de Acesso</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      background: radial-gradient(circle at center, #020617, #000);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex items-center justify-center text-slate-200">
+
+  <div class="max-w-md w-full bg-slate-900 rounded-2xl shadow-2xl p-8 text-center">
+
+    <div class="flex justify-center mb-6">
+      <img src="./assets/LOGO.png" alt="Lumina" class="h-16">
+    </div>
+
+    <h1 class="text-lg font-semibold tracking-wide mb-3">
+      Chave de Acesso
+    </h1>
+
+    <p class="text-sm text-slate-400 mb-6">
+      Informe sua chave Lumina para liberar o acesso completo.
+    </p>
+
+    <div class="mb-6">
+      <input
+        type="text"
+        id="tokenInput"
+        placeholder="LUMINA-XXXX-XXXX"
+        class="w-full bg-slate-800 border border-slate-700 rounded-lg py-3 px-4 text-center text-white font-mono tracking-widest focus:outline-none focus:border-red-800 transition"
+      />
+      <p id="mensagem" class="text-xs text-red-500 mt-2 min-h-[1.25rem]"></p>
+    </div>
+
+    <button
+      onclick="validarToken()"
+      class="w-full bg-red-800 hover:bg-red-700 text-white py-3 rounded-lg font-semibold tracking-wider transition mb-4"
+    >
+      VALIDAR ACESSO
+    </button>
+
+    <button
+      onclick="window.location.href='./index.html'"
+      class="text-xs text-slate-500 hover:text-slate-300 transition"
+    >
+      VOLTAR AO INÍCIO
+    </button>
+
+    <p class="text-xs text-slate-500 mt-8">
+      Lumina · Segurança de Acesso Ativa
+    </p>
+
+  </div>
+
+  <script src="./portal.js"></script>
+  <script>
+    // Segurança básica: só entra aqui se veio do acesso completo
+    const accessType = localStorage.getItem('lumina_access_type');
+    if (accessType !== 'full') {
+      window.location.replace('./index.html');
+    }
+
+    // Se já tem token válido, pula para o próximo passo
+    if (localStorage.getItem('lumina_token')) {
+      window.location.replace('./acesso.html');
+    }
+
+    // Permitir Enter para validar
+    document.getElementById('tokenInput').addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        validarToken();
+      }
+    });
+  </script>
+
+</body>
+</html>
