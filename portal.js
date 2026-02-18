@@ -46,9 +46,11 @@ async function validarToken() {
   localStorage.setItem("lumina_token", tokenDigitado);
   localStorage.setItem("lumina_user_name", registro.nome);
 
-  // Redireciona para a etapa de validação/termos
+  // Redireciona para a etapa de termos (obrigatória após nova validação)
   setTimeout(() => {
-    window.location.href = "./acesso.html";
+    // Resetamos o aceite dos termos para garantir que o usuário leia novamente ao validar uma nova chave
+    localStorage.removeItem("lumina_terms_accepted");
+    window.location.href = "./termos.html";
   }, 1500);
 }
 

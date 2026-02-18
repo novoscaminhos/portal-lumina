@@ -97,10 +97,19 @@
 
     function entrarCompleto() {
       localStorage.setItem('lumina_access_type', 'full');
-      // Se já tem token, vai direto para validação/termos, senão pede login
-      if (localStorage.getItem('lumina_token')) {
-        window.location.href = './acesso.html';
+      const token = localStorage.getItem('lumina_token');
+      const termos = localStorage.getItem('lumina_terms_accepted');
+
+      if (token) {
+        if (termos === 'true') {
+          // Já tem tudo, vai para o Splash (via acesso.html para validação visual)
+          window.location.href = './acesso.html';
+        } else {
+          // Tem token mas não aceitou termos
+          window.location.href = './termos.html';
+        }
       } else {
+        // Não tem token
         window.location.href = './login.html';
       }
     }

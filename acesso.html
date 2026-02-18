@@ -58,17 +58,15 @@
 
   // Pequeno delay simbólico (psicológico + UX)
   setTimeout(() => {
-
     const termosAceitos = localStorage.getItem('lumina_terms_accepted');
 
     if (termosAceitos === 'true') {
-      // Termos aceitos → segue para o ritual
+      // Se já aceitou os termos anteriormente, vai para o Splash
       window.location.replace('./splash.html');
     } else {
-      // Não aceitou → leitura obrigatória
+      // Se não aceitou, vai para os termos
       window.location.replace('./termos.html');
     }
-
   }, 1200);
 </script>
 
